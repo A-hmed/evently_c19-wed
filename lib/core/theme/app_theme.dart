@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
 
-class AppTheme{
+class AppTheme {
   static ThemeData light = ThemeData(
     scaffoldBackgroundColor: AppColors.lightBgColor,
     primaryColor: AppColors.lightPrimaryColor,
@@ -12,6 +12,11 @@ class AppTheme{
         fontSize: 20,
         fontWeight: FontWeight.w600,
         color: AppColors.lightTextColor,
+      ),
+      titleLarge: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.w600,
+        color: AppColors.lightPrimaryColor,
       ),
     ),
   );
