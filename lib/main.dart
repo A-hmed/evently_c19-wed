@@ -1,6 +1,8 @@
 import 'package:evently_c19/core/app_provider/app_provider.dart';
 import 'package:evently_c19/core/theme/app_theme.dart';
 import 'package:evently_c19/l10n/app_localizations.dart';
+import 'package:evently_c19/modules/login/login_screen.dart';
+import 'package:evently_c19/modules/register/register_screen.dart';
 import 'package:evently_c19/modules/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
             Locale('ar'),
           ],
           locale: provider.locale,
-          home: SplashScreen(),
+          home: LoginScreen(),
         );
       },
     );

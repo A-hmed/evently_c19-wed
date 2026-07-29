@@ -1,14 +1,11 @@
-import 'package:evently_c19/core/app_provider/app_provider.dart';
+import 'package:evently_c19/core/app_routes/app_routes.dart';
 import 'package:evently_c19/core/theme/app_colors.dart';
 import 'package:evently_c19/core/widgets/custom_btn.dart';
 import 'package:evently_c19/core/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../core/app_routes/app_routes.dart';
-
-class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({super.key});
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,17 +26,11 @@ class RegisterScreen extends StatelessWidget {
                 Align(
                   alignment: AlignmentGeometry.centerStart,
                   child: Text(
-                    'Create your account',
+                    'Login to your account',
                     style: theme.textTheme.titleLarge,
                   ),
                 ),
                 SizedBox(height: 20),
-                CustomTextField(
-                  hintText: 'Enter your name',
-                  prefixIcon: Icon(Icons.person, color: AppColors.grayColor),
-                  isPassword: false,
-                ),
-                SizedBox(height: 12),
                 CustomTextField(
                   hintText: 'Enter your email',
                   prefixIcon: Icon(Icons.email, color: AppColors.grayColor),
@@ -52,28 +43,32 @@ class RegisterScreen extends StatelessWidget {
                   isPassword: true,
                 ),
                 SizedBox(height: 12),
-                CustomTextField(
-                  hintText: 'Repassword',
-                  prefixIcon: Icon(Icons.lock, color: AppColors.grayColor),
-                  isPassword: true,
-                ),
-                SizedBox(height: 12),
-                CustomBtn(
-                  text: "Sign up",
-                  onTap: () {
-                  },
-                ),
+                CustomBtn(text: "Login", onTap: () {}),
                 SizedBox(height: 12),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Already have an account?", style: TextStyle(fontSize: 18)),
+                    Text(
+                      "Don't have an account?",
+                      style: TextStyle(fontSize: 18),
+                    ),
                     SizedBox(width: 8),
                     InkWell(
-                          onTap: (){
-                            Navigator.pop(context);
-                          },
-                        child: Text("Login", style: TextStyle(color: theme.primaryColor, decoration: TextDecoration.underline, fontSize: 18))),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          AppRoutes.register(),
+                        );
+                      },
+                      child: Text(
+                        "SignUp",
+                        style: TextStyle(
+                          color: theme.primaryColor,
+                          decoration: TextDecoration.underline,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 SizedBox(height: 12),

@@ -20,30 +20,44 @@ class CustomTextField extends StatefulWidget {
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
-  late final bool isPassword;
+  late bool isVisible;
 
   @override
   void initState() {
     super.initState();
-    isPassword = widget.isPassword;
+    isVisible = widget.isPassword;
   }
 
   @override
   Widget build(BuildContext context) {
+    var border = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(16),
+      borderSide: BorderSide(color: Colors.transparent, width: 0),
+    );
     return TextField(
       decoration: InputDecoration(
         hintText: widget.hintText,
         hintStyle: TextStyle(fontSize: 20, color: AppColors.grayColor),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: AppColors.grayColor, width: 1),
-        ),
+        border:border ,
+        enabledBorder: border,
+        errorBorder: border,
+        focusedBorder: border,
         prefixIcon: widget.prefixIcon,
-        suffixIcon: widget.suffixIcon,
+        suffixIcon:
+            widget.suffixIcon ??
+            (widget.isPassword
+                ? IconButton(
+                    onPressed: () {
+                      isVisible = !isVisible;
+                      setState(() {});
+                    },
+                    icon: Icon(isVisible ? Icons.remove_red_eye: Icons.visibility_off),
+                  )
+                : null),
         filled: true,
         fillColor: Colors.white,
       ),
-      obscureText: isPassword,
+      obscureText: isVisible,
     );
   }
 }

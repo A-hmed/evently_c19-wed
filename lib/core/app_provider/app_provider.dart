@@ -16,13 +16,7 @@ class AppProvider extends ChangeNotifier {
   bool get isArabic => _locale == Locale('ar');
 
   Locale get locale => _locale;
-
-  bool isPassword = false;
-
-  void togglePassword() {
-    isPassword = !isPassword;
-    notifyListeners();
-  }
+  
 
   void changeTheme(ThemeMode theme) {
     _themeMode = theme;
