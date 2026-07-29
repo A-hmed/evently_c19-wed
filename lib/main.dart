@@ -4,11 +4,19 @@ import 'package:evently_c19/l10n/app_localizations.dart';
 import 'package:evently_c19/modules/login/login_screen.dart';
 import 'package:evently_c19/modules/register/register_screen.dart';
 import 'package:evently_c19/modules/splash/splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: FirebaseOptions(apiKey: "AIzaSyCVfXesqNkOAlLd06WnP0TZKNJOSwPujwE",
+        appId: "1:98906151702:android:80bd4386f634cdb9658e37",
+        messagingSenderId: "",
+        projectId: "evently-c19-2e37f"),
+  );
   runApp(const MyApp());
 }
 

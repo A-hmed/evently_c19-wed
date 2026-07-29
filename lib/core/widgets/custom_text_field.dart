@@ -5,11 +5,13 @@ class CustomTextField extends StatefulWidget {
   final String hintText;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
+  final TextEditingController? controller;
   bool isPassword;
 
   CustomTextField({
     super.key,
     required this.hintText,
+    this.controller,
     this.prefixIcon,
     this.suffixIcon,
     this.isPassword = false,
@@ -35,6 +37,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       borderSide: BorderSide(color: Colors.transparent, width: 0),
     );
     return TextField(
+      controller: widget.controller,
       decoration: InputDecoration(
         hintText: widget.hintText,
         hintStyle: TextStyle(fontSize: 20, color: AppColors.grayColor),

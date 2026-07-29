@@ -2,10 +2,26 @@ import 'package:evently_c19/core/app_routes/app_routes.dart';
 import 'package:evently_c19/core/theme/app_colors.dart';
 import 'package:evently_c19/core/widgets/custom_btn.dart';
 import 'package:evently_c19/core/widgets/custom_text_field.dart';
+import 'package:firebase_auth/firebase_auth.dart'
+    show FirebaseAuth, FirebaseAuthException;
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController _emailController = TextEditingController(
+    text: "ahmed@gmail.com",
+  );
+  TextEditingController _passwordController = TextEditingController(
+    text: "123456",
+  );
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,18 +48,26 @@ class LoginScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 CustomTextField(
+                  controller: _emailController,
                   hintText: 'Enter your email',
                   prefixIcon: Icon(Icons.email, color: AppColors.grayColor),
                   isPassword: false,
                 ),
                 SizedBox(height: 12),
                 CustomTextField(
+                  controller: _passwordController,
                   hintText: 'Enter your password',
                   prefixIcon: Icon(Icons.lock, color: AppColors.grayColor),
                   isPassword: true,
                 ),
                 SizedBox(height: 12),
-                CustomBtn(text: "Login", onTap: () {}),
+                CustomBtn(
+                  text: "Login",
+                  isLoading: isLoading,
+                  onTap: () {
+                    login();
+                  },
+                ),
                 SizedBox(height: 12),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -55,10 +79,7 @@ class LoginScreen extends StatelessWidget {
                     SizedBox(width: 8),
                     InkWell(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          AppRoutes.register(),
-                        );
+                        Navigator.push(context, AppRoutes.register());
                       },
                       child: Text(
                         "SignUp",
@@ -78,5 +99,55 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void login() async {
+    try {
+      isLoading = true;
+      setState(() {});
+      final credential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+            email: _emailController.text,
+            password: _passwordController.text,
+          );
+
+      isLoading = false;
+      setState(() {});
+      Fluttertoast.showToast(
+        msg: "Success",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } on FirebaseAuthException catch (e) {
+      isLoading = false;
+      setState(() {});
+
+      var message = e.message ?? "Something went wrong please try again later";
+      Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } catch (e) {
+      isLoading = false;
+      setState(() {});
+      Fluttertoast.showToast(
+        msg: e.toString(),
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
   }
 }
