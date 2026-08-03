@@ -1,9 +1,11 @@
 import 'package:evently_c19/core/app_routes/app_routes.dart';
+import 'package:evently_c19/core/firebase/firestore_helper.dart';
 import 'package:evently_c19/core/theme/app_colors.dart';
 import 'package:evently_c19/core/widgets/custom_btn.dart';
 import 'package:evently_c19/core/widgets/custom_text_field.dart';
+import 'package:evently_c19/model/user_dm.dart';
 import 'package:firebase_auth/firebase_auth.dart'
-    show FirebaseAuth, FirebaseAuthException;
+    show FirebaseAuth, FirebaseAuthException, UserCredential;
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -102,15 +104,16 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void login() async {
-    try {
+    //try {
       isLoading = true;
       setState(() {});
-      final credential = await FirebaseAuth.instance
+      UserCredential credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
             email: _emailController.text,
             password: _passwordController.text,
           );
-
+      UserDM user = await getUserFromFirestore(credential.user!.uid);
+      print(user.name);
       isLoading = false;
       setState(() {});
       Fluttertoast.showToast(
@@ -122,32 +125,32 @@ class _LoginScreenState extends State<LoginScreen> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-    } on FirebaseAuthException catch (e) {
-      isLoading = false;
-      setState(() {});
-
-      var message = e.message ?? "Something went wrong please try again later";
-      Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-    } catch (e) {
-      isLoading = false;
-      setState(() {});
-      Fluttertoast.showToast(
-        msg: e.toString(),
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-    }
+    // } on FirebaseAuthException catch (e) {
+    //   isLoading = false;
+    //   setState(() {});
+    //
+    //   var message = e.message ?? "Something went wrong please try again later";
+    //   Fluttertoast.showToast(
+    //     msg: message,
+    //     toastLength: Toast.LENGTH_SHORT,
+    //     gravity: ToastGravity.BOTTOM,
+    //     timeInSecForIosWeb: 1,
+    //     backgroundColor: Colors.red,
+    //     textColor: Colors.white,
+    //     fontSize: 16.0,
+    //   );
+    // } catch (e) {
+    //   isLoading = false;
+    //   setState(() {});
+    //   Fluttertoast.showToast(
+    //     msg: e.toString(),
+    //     toastLength: Toast.LENGTH_SHORT,
+    //     gravity: ToastGravity.CENTER,
+    //     timeInSecForIosWeb: 1,
+    //     backgroundColor: Colors.red,
+    //     textColor: Colors.white,
+    //     fontSize: 16.0,
+    //   );
+    // }
   }
 }

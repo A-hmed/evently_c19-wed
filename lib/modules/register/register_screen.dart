@@ -1,6 +1,8 @@
+import 'package:evently_c19/core/firebase/firestore_helper.dart';
 import 'package:evently_c19/core/theme/app_colors.dart';
 import 'package:evently_c19/core/widgets/custom_btn.dart';
 import 'package:evently_c19/core/widgets/custom_text_field.dart';
+import 'package:evently_c19/model/user_dm.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -13,9 +15,13 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  TextEditingController _emailController = TextEditingController(text: "ahmed@gmail.com");
+  TextEditingController _emailController = TextEditingController(
+    text: "ahmed@gmail.com",
+  );
   TextEditingController _nameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController(text: "123456");
+  TextEditingController _passwordController = TextEditingController(
+    text: "123456",
+  );
   TextEditingController _rePasswordController = TextEditingController();
   bool isLoading = false;
 
@@ -115,12 +121,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
     try {
       isLoading = true;
       setState(() {});
-      final credential = await FirebaseAuth.instance
+      UserCredential credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
             email: _emailController.text,
             password: _passwordController.text,
           );
-
+      createUserInFirestore(
+        UserDM(
+          email: _emailController.text,
+          name: _nameController.text,
+          id: credential.user!.uid,
+        ),
+      );
+      //todo: Navigate to home screen
       isLoading = false;
       setState(() {});
     } on FirebaseAuthException catch (e) {
