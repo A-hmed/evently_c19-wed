@@ -2,7 +2,7 @@ class EventDM {
   static const collectionName = "events";
   String id;
   String ownerId;
-  String category;
+  int categoryId;
   String title;
   String description;
   DateTime date;
@@ -12,7 +12,7 @@ class EventDM {
     required this.ownerId,
     required this.title,
     required this.description,
-    required this.category,
+    required this.categoryId,
     required this.date,
   });
 
@@ -22,7 +22,7 @@ class EventDM {
         ownerId: json['ownerId'],
         title: json['title'],
         description: json['description'],
-        category: json['category'],
+    categoryId: json['categoryId'],
         date: json['date'],
       );
 
@@ -31,7 +31,7 @@ class EventDM {
     "ownerId": ownerId,
     "title": title,
     "description": description,
-    "category": category,
+    "categoryId": categoryId,
     "date": date,
   };
 }

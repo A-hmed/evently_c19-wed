@@ -6,6 +6,7 @@ class CustomTextField extends StatefulWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final TextEditingController? controller;
+  final int lines;
   bool isPassword;
 
   CustomTextField({
@@ -14,6 +15,7 @@ class CustomTextField extends StatefulWidget {
     this.controller,
     this.prefixIcon,
     this.suffixIcon,
+    this.lines = 1,
     this.isPassword = false,
   });
 
@@ -59,8 +61,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 : null),
         filled: true,
         fillColor: Colors.white,
+
       ),
       obscureText: isVisible,
+      minLines: widget.lines,
+      maxLines: widget.lines,
     );
   }
 }

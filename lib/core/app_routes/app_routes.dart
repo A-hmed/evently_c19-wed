@@ -1,4 +1,6 @@
+import 'package:evently_c19/modules/add_event/add_event_screen.dart';
 import 'package:evently_c19/modules/login/login_screen.dart';
+import 'package:evently_c19/modules/main_layout/main_layout.dart';
 import 'package:evently_c19/modules/register/register_screen.dart';
 import 'package:evently_c19/modules/splash/splash_screen.dart';
 import 'package:evently_c19/modules/start/screens/start_screen.dart';
@@ -9,4 +11,6 @@ class AppRoutes {
   static Route startScreen() => MaterialPageRoute(builder: (context) => StartScreen());
   static Route register() => MaterialPageRoute(builder: (context) => RegisterScreen());
   static Route splash() => MaterialPageRoute(builder: (context) => SplashScreen());
+  static Route home() => MaterialPageRoute(builder: (context) => MainLayoutScreen());
+  static Route addEvent() => MaterialPageRoute(builder: (context) => AddEventScreen());
 }

@@ -23,7 +23,7 @@ import 'app_localizations_en.dart';
 /// return MaterialApp(
 ///   localizationsDelegates: AppLocalizations.localizationsDelegates,
 ///   supportedLocales: AppLocalizations.supportedLocales,
-///   home: MyApplicationHome(),
+///   main_layout: MyApplicationHome(),
 /// );
 /// ```
 ///

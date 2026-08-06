@@ -72,7 +72,9 @@ flutter:
      - assets/logo/
      - assets/images/
      - assets/icons/
-  #   - images/a_dot_ham.jpeg
+     - assets/images/light_images/
+     - assets/images/dark_images/
+       #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

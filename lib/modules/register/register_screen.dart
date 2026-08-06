@@ -133,7 +133,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           id: credential.user!.uid,
         ),
       );
-      //todo: Navigate to home screen
+      //todo: Navigate to main_layout screen
       isLoading = false;
       setState(() {});
     } on FirebaseAuthException catch (e) {
