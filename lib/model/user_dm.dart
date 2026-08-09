@@ -1,4 +1,5 @@
 class UserDM {
+  static late UserDM currentUser;
   static const collectionName = "users";
   late String id;
   late String email;

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:evently_c19/core/app_provider/app_provider.dart';
 import 'package:evently_c19/core/theme/app_theme.dart';
 import 'package:evently_c19/l10n/app_localizations.dart';
@@ -46,7 +48,7 @@ class MyApp extends StatelessWidget {
             Locale('ar'),
           ],
           locale: provider.locale,
-          home: AddEventScreen(),
+          home: SplashScreen(),
         );
       },
     );

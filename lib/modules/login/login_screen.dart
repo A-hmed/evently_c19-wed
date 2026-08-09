@@ -112,10 +112,10 @@ class _LoginScreenState extends State<LoginScreen> {
             email: _emailController.text,
             password: _passwordController.text,
           );
-      UserDM user = await getUserFromFirestore(credential.user!.uid);
-      print(user.name);
+      UserDM.currentUser = await getUserFromFirestore(credential.user!.uid);
       isLoading = false;
       setState(() {});
+      Navigator.push(context, AppRoutes.home());
       Fluttertoast.showToast(
         msg: "Success",
         toastLength: Toast.LENGTH_SHORT,

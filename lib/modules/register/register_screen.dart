@@ -1,3 +1,4 @@
+import 'package:evently_c19/core/app_routes/app_routes.dart';
 import 'package:evently_c19/core/firebase/firestore_helper.dart';
 import 'package:evently_c19/core/theme/app_colors.dart';
 import 'package:evently_c19/core/widgets/custom_btn.dart';
@@ -126,14 +127,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
             email: _emailController.text,
             password: _passwordController.text,
           );
-      createUserInFirestore(
-        UserDM(
-          email: _emailController.text,
-          name: _nameController.text,
-          id: credential.user!.uid,
-        ),
+      UserDM.currentUser =  UserDM(
+        email: _emailController.text,
+        name: _nameController.text,
+        id: credential.user!.uid,
       );
-      //todo: Navigate to main_layout screen
+      createUserInFirestore(
+        UserDM.currentUser,
+      );
+      Navigator.push(context, AppRoutes.home());
       isLoading = false;
       setState(() {});
     } on FirebaseAuthException catch (e) {

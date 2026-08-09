@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class EventDM {
   static const collectionName = "events";
   String id;
@@ -23,7 +25,7 @@ class EventDM {
         title: json['title'],
         description: json['description'],
     categoryId: json['categoryId'],
-        date: json['date'],
+        date: (json['date'] as Timestamp).toDate(),
       );
 
   Map<String, dynamic> toJson() => {

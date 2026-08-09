@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:evently_c19/core/app_routes/app_routes.dart';
-import 'package:evently_c19/modules/start/screens/start_screen.dart';
+import 'package:evently_c19/core/firebase/firestore_helper.dart';
+import 'package:evently_c19/model/user_dm.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,6 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -17,30 +17,32 @@ class SplashScreen extends StatelessWidget {
           children: [
             Expanded(
               child: ZoomIn(
-                duration: Duration(
-                  seconds: 2
-                ),
+                duration: Duration(seconds: 2),
                 child: Center(
                   child: Hero(
-                      tag: "logo",
-                      child: Image.asset("assets/logo/app_logo.png", width: 309)),
+                    tag: "logo",
+                    child: Image.asset("assets/logo/app_logo.png", width: 309),
+                  ),
                 ),
               ),
             ),
 
             FadeInUp(
               onFinish: (direction) {
-                Future.delayed(Duration(seconds: 1),() {
-                  if(FirebaseAuth.instance.currentUser != null){
+                Future.delayed(Duration(seconds: 1), () async {
+                  if (FirebaseAuth.instance.currentUser != null) {
+                    UserDM.currentUser = await getUserFromFirestore(
+                      FirebaseAuth.instance.currentUser!.uid,
+                    );
                     Navigator.pushReplacement(context, AppRoutes.home());
-                  }else {
+                  } else {
                     Navigator.pushReplacement(context, AppRoutes.startScreen());
                   }
-
-                },);
+                });
               },
-                delay: Duration(seconds: 2),
-                child: Image.asset("assets/logo/route_logo.png", width: 214)),
+              delay: Duration(seconds: 2),
+              child: Image.asset("assets/logo/route_logo.png", width: 214),
+            ),
           ],
         ),
       ),
