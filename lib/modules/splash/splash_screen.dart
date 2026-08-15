@@ -1,5 +1,5 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:evently_c19/modules/start/screens/start_screen.dart';
+import 'package:evently_c19/modules/start/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -7,7 +7,6 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -15,27 +14,31 @@ class SplashScreen extends StatelessWidget {
           children: [
             Expanded(
               child: ZoomIn(
-                duration: Duration(
-                  seconds: 2
-                ),
+                duration: const Duration(seconds: 2),
                 child: Center(
                   child: Hero(
-                      tag: "logo",
-                      child: Image.asset("assets/logo/app_logo.png", width: 309)),
+                    tag: "logo",
+                    child: Image.asset("assets/logo/app_logo.png", width: 309),
+                  ),
                 ),
               ),
             ),
-
             FadeInUp(
               onFinish: (direction) {
-                Future.delayed(Duration(seconds: 1),() {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return StartScreen();
-                  },));
-                },);
+                Future.delayed(const Duration(seconds: 1), () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const OnboardingScreen();
+                      },
+                    ),
+                  );
+                });
               },
-                delay: Duration(seconds: 2),
-                child: Image.asset("assets/logo/route_logo.png", width: 214)),
+              delay: const Duration(seconds: 2),
+              child: Image.asset("assets/logo/route_logo.png", width: 214),
+            ),
           ],
         ),
       ),
