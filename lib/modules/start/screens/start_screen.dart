@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class StartScreen extends StatelessWidget {
-  const StartScreen({super.key});
+  final VoidCallback onNext;
+
+  const StartScreen({super.key, required this.onNext});
 
   @override
   Widget build(BuildContext context) {
@@ -91,16 +93,15 @@ class StartScreen extends StatelessWidget {
                   SelectionItem(
                     icon: "assets/icons/icn_dark.png",
                     isSelected: provider.themeMode == ThemeMode.dark,
-                  onTap: () {
-                    provider.changeTheme(ThemeMode.dark);
-
-                  },
+                    onTap: () {
+                      provider.changeTheme(ThemeMode.dark);
+                    },
                   ),
                 ],
               ),
               Spacer(),
               Center(
-                child: CustomBtn(text: "Let’s start", onTap: () {}),
+                child: CustomBtn(text: "Let’s start", onTap: onNext),
               ),
             ],
           ),

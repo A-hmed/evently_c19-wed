@@ -1,5 +1,4 @@
 import 'package:evently_c19/core/app_provider/app_provider.dart';
-import 'package:evently_c19/core/theme/app_colors.dart';
 import 'package:evently_c19/core/theme/app_theme.dart';
 import 'package:evently_c19/modules/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
