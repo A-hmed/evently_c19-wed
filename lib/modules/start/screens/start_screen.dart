@@ -1,6 +1,10 @@
 import 'package:evently_c19/core/app_provider/app_provider.dart';
+import 'package:evently_c19/core/app_routes/app_routes.dart';
 import 'package:evently_c19/core/theme/app_colors.dart';
 import 'package:evently_c19/core/widgets/custom_btn.dart';
+import 'package:evently_c19/l10n/app_localizations.dart';
+import 'package:evently_c19/modules/login/login_screen.dart';
+import 'package:evently_c19/modules/register/register_screen.dart';
 import 'package:evently_c19/modules/start/widgets/selection_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,12 +39,14 @@ class StartScreen extends StatelessWidget {
               ),
               SizedBox(height: 24),
               Text(
-                "Personalize Your Experience",
+                AppLocalizations.of(context)!.personalizeYourExperience,
                 style: theme.textTheme.titleMedium,
               ),
               SizedBox(height: 8),
               Text(
-                "Choose your preferred theme and language to get started with a comfortable, tailored experience that suits your style.",
+                AppLocalizations.of(
+                  context,
+                )!.personalizeYourExperienceDescription,
                 style: TextStyle(
                   fontSize: 16,
                   color: AppColors.grayColor,
@@ -52,7 +58,7 @@ class StartScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      "Language",
+                      AppLocalizations.of(context)!.language,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -60,10 +66,21 @@ class StartScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-
-                  SelectionItem(text: "English", isSelected: true),
+                  SelectionItem(
+                    text: AppLocalizations.of(context)!.english,
+                    isSelected: provider.isEnglish,
+                    onTap: () {
+                      provider.changeLocale(Locale('en'));
+                    },
+                  ),
                   SizedBox(width: 8),
-                  SelectionItem(text: "Arabic", isSelected: false),
+                  SelectionItem(
+                    text: AppLocalizations.of(context)!.arabic,
+                    isSelected: provider.isArabic,
+                    onTap: () {
+                      provider.changeLocale(Locale('ar'));
+                    },
+                  ),
                 ],
               ),
               SizedBox(height: 16),
@@ -71,7 +88,7 @@ class StartScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      "Theme",
+                      AppLocalizations.of(context)!.theme,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -79,10 +96,9 @@ class StartScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   SelectionItem(
                     icon: "assets/icons/icn_light.png",
-                    isSelected: provider.themeMode == ThemeMode.light,
+                    isSelected: provider.isLight,
                     onTap: () {
                       provider.changeTheme(ThemeMode.light);
                     },
@@ -90,17 +106,21 @@ class StartScreen extends StatelessWidget {
                   SizedBox(width: 8),
                   SelectionItem(
                     icon: "assets/icons/icn_dark.png",
-                    isSelected: provider.themeMode == ThemeMode.dark,
-                  onTap: () {
-                    provider.changeTheme(ThemeMode.dark);
-
-                  },
+                    isSelected: provider.isDark,
+                    onTap: () {
+                      provider.changeTheme(ThemeMode.dark);
+                    },
                   ),
                 ],
               ),
               Spacer(),
               Center(
-                child: CustomBtn(text: "Let’s start", onTap: () {}),
+                child: CustomBtn(
+                  text: AppLocalizations.of(context)!.letsStart,
+                  onTap: () {
+                    Navigator.pushReplacement(context, AppRoutes.onboarding());
+                  },
+                ),
               ),
             ],
           ),
