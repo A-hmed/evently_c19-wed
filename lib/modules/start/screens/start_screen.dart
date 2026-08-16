@@ -1,4 +1,5 @@
 import 'package:evently_c19/core/app_provider/app_provider.dart';
+import 'package:evently_c19/core/app_routes/app_routes.dart';
 import 'package:evently_c19/core/theme/app_colors.dart';
 import 'package:evently_c19/core/widgets/custom_btn.dart';
 import 'package:evently_c19/l10n/app_localizations.dart';
@@ -117,10 +118,7 @@ class StartScreen extends StatelessWidget {
                 child: CustomBtn(
                   text: AppLocalizations.of(context)!.letsStart,
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()),
-                    );
+                    Navigator.pushReplacement(context, AppRoutes.onboarding());
                   },
                 ),
               ),

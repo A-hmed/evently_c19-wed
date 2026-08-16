@@ -1,23 +1,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evently_c19/model/event_dm.dart';
 import 'package:evently_c19/model/user_dm.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 ///           User methods ////////////////
 Future<void> createUserInFirestore(UserDM user) async {
   CollectionReference userCollection = FirebaseFirestore.instance.collection(
     "users",
   );
-  userCollection.doc(user.id).set(user.toJson());
+
+  await userCollection.doc(user.id).set(user.toJson());
 }
 
-Future<UserDM> getUserFromFirestore(String id) async {
+Future<UserDM?> getUserFromFirestore(String id) async {
   CollectionReference userCollection = FirebaseFirestore.instance.collection(
     UserDM.collectionName,
   );
-  DocumentReference reference = userCollection.doc(id);
-  DocumentSnapshot userSnapshot = await reference.get();
+
+  DocumentSnapshot userSnapshot = await userCollection.doc(id).get();
+
+  if (!userSnapshot.exists) {
+    return null;
+  }
 
   var json = userSnapshot.data() as Map<String, dynamic>;
+
   return UserDM.fromJson(json);
 }
 
@@ -50,14 +58,15 @@ Stream<List<EventDM>> getAllEvents() {
       .collection(EventDM.collectionName)
       .snapshots();
 
-  return streamQuerySnapshot.map((querySnapshot){
+  return streamQuerySnapshot.map((querySnapshot) {
     var documents = querySnapshot.docs;
     return documents
-        .map((snapshot) =>
-        EventDM.fromJson(snapshot.data() as Map<String, dynamic>),)
+        .map(
+          (snapshot) =>
+              EventDM.fromJson(snapshot.data() as Map<String, dynamic>),
+        )
         .toList();
   });
-
 }
 
 Future<List<EventDM>> getFavoriteEvents() async {
@@ -89,4 +98,68 @@ Future createEventInFirestore(EventDM event) async {
   await emptyDoc.set(event.toJson());
 }
 
-updateEventInFirestore(EventDM event) {}
+Future<void> updateEventInFirestore(EventDM event) async {
+  CollectionReference eventsCollection = FirebaseFirestore.instance.collection(
+    EventDM.collectionName,
+  );
+  await eventsCollection.doc(event.id).update(event.toJson());
+}
+
+Future<void> deleteEventFromFirestore(String eventId) async {
+  CollectionReference eventsCollection = FirebaseFirestore.instance.collection(
+    EventDM.collectionName,
+  );
+  await eventsCollection.doc(eventId).delete();
+}
+
+/// Google Log-in
+Future<UserDM?> loginWithGoogle() async {
+  try {
+    final googleSignIn = GoogleSignIn.instance;
+
+    await googleSignIn.initialize();
+
+    final googleUser = await googleSignIn.authenticate();
+
+    final googleAuth = googleUser.authentication;
+
+    final credential = GoogleAuthProvider.credential(
+      idToken: googleAuth.idToken,
+    );
+
+    final UserCredential userCredential = await FirebaseAuth.instance
+        .signInWithCredential(credential);
+
+    final firebaseUser = userCredential.user;
+
+    if (firebaseUser == null) {
+      return null;
+    }
+
+    final user = await getUserFromFirestore(firebaseUser.uid);
+
+    if (user != null) {
+      UserDM.currentUser = user;
+      return user;
+    }
+
+    final newUser = UserDM(
+      id: firebaseUser.uid,
+      email: firebaseUser.email ?? googleUser.email,
+      name: firebaseUser.displayName ?? 'User',
+    );
+
+    await createUserInFirestore(newUser);
+
+    UserDM.currentUser = newUser;
+
+    return newUser;
+  } on FirebaseAuthException catch (e) {
+    print("Firebase Auth Error: ${e.code}");
+    print(e.message);
+    return null;
+  } catch (e) {
+    print("Google Login Error: $e");
+    return null;
+  }
+}

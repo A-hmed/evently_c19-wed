@@ -1,8 +1,5 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:evently_c19/core/app_routes/app_routes.dart';
-import 'package:evently_c19/core/firebase/firestore_helper.dart';
-import 'package:evently_c19/model/user_dm.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:evently_c19/modules/start/screens/start_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -29,15 +26,15 @@ class SplashScreen extends StatelessWidget {
 
             FadeInUp(
               onFinish: (direction) {
-                Future.delayed(Duration(seconds: 1), () async {
-                  if (FirebaseAuth.instance.currentUser != null) {
-                    UserDM.currentUser = await getUserFromFirestore(
-                      FirebaseAuth.instance.currentUser!.uid,
-                    );
-                    Navigator.pushReplacement(context, AppRoutes.home());
-                  } else {
-                    Navigator.pushReplacement(context, AppRoutes.startScreen());
-                  }
+                Future.delayed(Duration(seconds: 1), () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return StartScreen();
+                      },
+                    ),
+                  );
                 });
               },
               delay: Duration(seconds: 2),

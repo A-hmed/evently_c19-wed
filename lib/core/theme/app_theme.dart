@@ -4,6 +4,7 @@ import 'app_colors.dart';
 
 class AppTheme {
   static ThemeData light = ThemeData(
+    fontFamily: 'Poppins',
     scaffoldBackgroundColor: AppColors.lightBgColor,
     primaryColor: AppColors.lightPrimaryColor,
     primaryColorLight: AppColors.lightPrimaryColor,
@@ -44,6 +45,7 @@ class AppTheme {
     ),
   );
   static ThemeData dark = ThemeData(
+    fontFamily: 'Poppins',
     scaffoldBackgroundColor: AppColors.darkBgColor,
     primaryColor: AppColors.darkPrimaryColor,
     primaryColorLight: AppColors.darkTextColor,

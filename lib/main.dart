@@ -13,12 +13,7 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: FirebaseOptions(apiKey: "AIzaSyCVfXesqNkOAlLd06WnP0TZKNJOSwPujwE",
-        appId: "1:98906151702:android:80bd4386f634cdb9658e37",
-        messagingSenderId: "",
-        projectId: "evently-c19-2e37f"),
-  );
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -43,10 +38,7 @@ class MyApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          supportedLocales: [
-            Locale('en'),
-            Locale('ar'),
-          ],
+          supportedLocales: [Locale('en'), Locale('ar')],
           locale: provider.locale,
           home: SplashScreen(),
         );
