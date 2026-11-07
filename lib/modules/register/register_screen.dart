@@ -1,12 +1,15 @@
 import 'package:evently_c19/core/app_routes/app_routes.dart';
 import 'package:evently_c19/core/firebase/firestore_helper.dart';
+import 'package:evently_c19/core/firebase/google_auth_helper.dart';
 import 'package:evently_c19/core/theme/app_colors.dart';
 import 'package:evently_c19/core/widgets/custom_btn.dart';
 import 'package:evently_c19/core/widgets/custom_text_field.dart';
+import 'package:evently_c19/core/widgets/google_btn.dart';
 import 'package:evently_c19/model/user_dm.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -25,14 +28,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   );
   TextEditingController _rePasswordController = TextEditingController();
   bool isLoading = false;
+  bool isGoogleLoading = false;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
       body: SafeArea(
-        child: SizedBox.expand(
-          child: Padding(
+        child: Center(
+          child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -110,6 +114,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ],
                 ),
                 SizedBox(height: 12),
+                Text(
+                  "Or",
+                  style: TextStyle(
+                    color: theme.primaryColor,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(height: 12),
+                GoogleBtn(
+                  text: "Sign up with Google",
+                  isLoading: isGoogleLoading,
+                  onTap: () {
+                    signUpWithGoogle();
+                  },
+                ),
+                SizedBox(height: 12),
               ],
             ),
           ),
@@ -158,6 +179,56 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
     } catch (e) {
       isLoading = false;
+      setState(() {});
+      Fluttertoast.showToast(
+        msg: e.toString(),
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  }
+
+  void signUpWithGoogle() async {
+    try {
+      isGoogleLoading = true;
+      setState(() {});
+      UserDM.currentUser = await signInWithGoogle();
+      isGoogleLoading = false;
+      setState(() {});
+      Navigator.pushReplacement(context, AppRoutes.home());
+    } on GoogleSignInException catch (e) {
+      isGoogleLoading = false;
+      setState(() {});
+
+
+      if (e.code == GoogleSignInExceptionCode.canceled) return;
+      Fluttertoast.showToast(
+        msg: e.description ?? "Something went wrong please try again later",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } on FirebaseAuthException catch (e) {
+      isGoogleLoading = false;
+      setState(() {});
+      Fluttertoast.showToast(
+        msg: e.message ?? "Something went wrong please try again later",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } catch (e) {
+      isGoogleLoading = false;
       setState(() {});
       Fluttertoast.showToast(
         msg: e.toString(),

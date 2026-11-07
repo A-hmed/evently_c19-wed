@@ -36,7 +36,7 @@ class CategoryDM {
     ),
     CategoryDM(
       id: 2,
-      nameEn: 'Book Club',
+      nameEn: 'Book club',
       nameAr: 'نادي الكتاب',
       imageLight: 'assets/images/light_images/Book Club.png',
       imageDark: 'assets/images/dark_images/Book Club.png',
@@ -70,20 +70,20 @@ class CategoryDM {
 
   static final List<CategoryDM> categories = [
     CategoryDM(
+      id: 2,
+      nameEn: 'Book club',
+      nameAr: 'نادي الكتاب',
+      imageLight: 'assets/images/light_images/Book Club.png',
+      imageDark: 'assets/images/dark_images/Book Club.png',
+      icon: Icons.menu_book,
+    ),
+    CategoryDM(
       id: 1,
       nameEn: 'Sport',
       nameAr: 'رياضة',
       imageLight: 'assets/images/light_images/Sport.png',
       imageDark: 'assets/images/dark_images/Sport.png',
       icon: Icons.sports_soccer,
-    ),
-    CategoryDM(
-      id: 2,
-      nameEn: 'Book Club',
-      nameAr: 'نادي الكتاب',
-      imageLight: 'assets/images/light_images/Book Club.png',
-      imageDark: 'assets/images/dark_images/Book Club.png',
-      icon: Icons.menu_book,
     ),
     CategoryDM(
       id: 3,

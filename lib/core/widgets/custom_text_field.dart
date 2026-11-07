@@ -7,6 +7,12 @@ class CustomTextField extends StatefulWidget {
   final Widget? suffixIcon;
   final TextEditingController? controller;
   final int lines;
+
+
+  final bool expands;
+
+
+  final bool compact;
   bool isPassword;
 
   CustomTextField({
@@ -16,6 +22,8 @@ class CustomTextField extends StatefulWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.lines = 1,
+    this.expands = false,
+    this.compact = false,
     this.isPassword = false,
   });
 
@@ -40,9 +48,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
     );
     return TextField(
       controller: widget.controller,
+      style: widget.compact ? TextStyle(fontSize: 14) : null,
       decoration: InputDecoration(
         hintText: widget.hintText,
-        hintStyle: TextStyle(fontSize: 20, color: AppColors.grayColor),
+        hintStyle: TextStyle(
+          fontSize: widget.compact ? 14 : 20,
+          color: AppColors.grayColor,
+        ),
+        contentPadding: widget.compact
+            ? EdgeInsets.symmetric(horizontal: 16, vertical: 14)
+            : null,
         border:border ,
         enabledBorder: border,
         errorBorder: border,
@@ -64,8 +79,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
       ),
       obscureText: isVisible,
-      minLines: widget.lines,
-      maxLines: widget.lines,
+      expands: widget.expands,
+      textAlignVertical: widget.expands ? TextAlignVertical.top : null,
+      minLines: widget.expands ? null : widget.lines,
+      maxLines: widget.expands ? null : widget.lines,
     );
   }
 }

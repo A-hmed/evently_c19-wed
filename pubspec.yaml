@@ -43,6 +43,7 @@ dependencies:
   firebase_auth: ^6.5.6
   fluttertoast: ^9.1.0
   cloud_firestore: ^6.7.1
+  google_sign_in: ^7.2.0
 
 dev_dependencies:
   flutter_test:
@@ -101,3 +102,11 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+          weight: 600

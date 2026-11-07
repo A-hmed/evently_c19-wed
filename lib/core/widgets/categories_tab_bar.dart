@@ -4,11 +4,15 @@ import 'package:flutter/material.dart';
 class CategoriesTabBar extends StatefulWidget {
   final List<CategoryDM> categories;
   final Function(CategoryDM) onTap;
+  final int initialIndex;
+  final EdgeInsetsGeometry? labelPadding;
 
   const CategoriesTabBar({
     super.key,
     required this.categories,
     required this.onTap,
+    this.initialIndex = 0,
+    this.labelPadding,
   });
 
   @override
@@ -17,14 +21,16 @@ class CategoriesTabBar extends StatefulWidget {
 
 class _CategoriesTabBarState extends State<CategoriesTabBar> {
   late ThemeData themeData = Theme.of(context);
-  late CategoryDM selectedCategory = widget.categories[0];
+  late CategoryDM selectedCategory = widget.categories[widget.initialIndex];
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
+      initialIndex: widget.initialIndex == 1 ? 0 : widget.initialIndex,
       length: widget.categories.length,
       child: TabBar(
         isScrollable: true,
+        labelPadding: widget.labelPadding,
         indicatorColor: Colors.transparent,
         tabAlignment: TabAlignment.start,
         dividerColor: Colors.transparent,

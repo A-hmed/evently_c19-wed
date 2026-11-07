@@ -14,10 +14,10 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: FirebaseOptions(apiKey: "AIzaSyCVfXesqNkOAlLd06WnP0TZKNJOSwPujwE",
-        appId: "1:98906151702:android:80bd4386f634cdb9658e37",
-        messagingSenderId: "",
-        projectId: "evently-c19-2e37f"),
+    options: FirebaseOptions(apiKey: "AIzaSyAOy8M8PJLKtt-34aNFIfiyoTLL4IDomT4",
+        appId: "1:451912220251:android:a74ae855dbadc1efd6497e",
+        messagingSenderId: "451912220251",
+        projectId: "evently-11441"),
   );
   runApp(const MyApp());
 }
