@@ -89,4 +89,19 @@ Future createEventInFirestore(EventDM event) async {
   await emptyDoc.set(event.toJson());
 }
 
-updateEventInFirestore(EventDM event) {}
+Future updateEventInFirestore(EventDM event) async {
+  CollectionReference eventsCollection = FirebaseFirestore.instance.collection(
+    EventDM.collectionName,
+  );
+  await eventsCollection.doc(event.id).update(event.toJson());
+}
+
+Future deleteEventFromFirestore(String eventId) async {
+  CollectionReference eventsCollection = FirebaseFirestore.instance.collection(
+    EventDM.collectionName,
+  );
+  await eventsCollection.doc(eventId).delete();
+  if (UserDM.currentUser.favorites.contains(eventId)) {
+    removeEventFromFavorites(eventId);
+  }
+}

@@ -4,7 +4,17 @@ import 'app_colors.dart';
 
 class AppTheme {
   static ThemeData light = ThemeData(
+    fontFamily: 'Poppins',
     scaffoldBackgroundColor: AppColors.lightBgColor,
+    appBarTheme: AppBarThemeData(
+      leadingWidth: 64,
+      titleTextStyle: TextStyle(
+        fontFamily: 'Poppins',
+        fontSize: 18,
+        fontWeight: FontWeight.w500,
+        color: AppColors.lightTextColor,
+      ),
+    ),
     primaryColor: AppColors.lightPrimaryColor,
     primaryColorLight: AppColors.lightPrimaryColor,
     colorScheme: ColorScheme.fromSeed(
@@ -44,7 +54,17 @@ class AppTheme {
     ),
   );
   static ThemeData dark = ThemeData(
+    fontFamily: 'Poppins',
     scaffoldBackgroundColor: AppColors.darkBgColor,
+    appBarTheme: AppBarThemeData(
+      leadingWidth: 64,
+      titleTextStyle: TextStyle(
+        fontFamily: 'Poppins',
+        fontSize: 18,
+        fontWeight: FontWeight.w500,
+        color: AppColors.darkTextColor,
+      ),
+    ),
     primaryColor: AppColors.darkPrimaryColor,
     primaryColorLight: AppColors.darkTextColor,
     textTheme: TextTheme(
